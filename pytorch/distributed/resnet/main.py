@@ -57,14 +57,14 @@ def evaluate(model, device, test_loader):
 
 
 def main():
-    num_epochs_default = 100
+    num_epochs_default = 10
     batch_size_default = 256
     image_size_default = 224
     learning_rate_default = 0.1
     random_seed_default = 0
     model_dir_default = "saved_models"
     model_filename_default = "resnet_distributed.pth"
-    steps_syn_default = 20
+    steps_syn_default = 1
 
     # Each process runs on 1 GPU device specified by the local_rank argument.
     parser = argparse.ArgumentParser(
@@ -235,6 +235,8 @@ def main():
     # Loop over the dataset multiple times
     times = []
     for epoch in range(num_epochs):
+        import datetime
+        print(datetime.datetime.now(), "Epoch: ", epoch, file=open('./step.txt', 'a'))
         # Save and evaluate model routinely
         if not use_syn:
             if epoch % 10 == 0:
