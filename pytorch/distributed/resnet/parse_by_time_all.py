@@ -130,6 +130,14 @@ for i, time in enumerate(times):
 times = new_times
 sums = new_sums
 
+import numpy as np
+
+# 将列表写入文本文件
+if args.from_to == "from":
+    np.savetxt('sumsfrom108.txt', sums)
+else:
+    np.savetxt('sumsto108.txt', sums)
+
 # 绘制柱状图
 plt.bar(times, sums, color='skyblue')
 gap_x = max((int)(len(times) / 5), 1)
