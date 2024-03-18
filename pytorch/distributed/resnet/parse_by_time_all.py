@@ -134,9 +134,11 @@ import numpy as np
 
 # 将列表写入文本文件
 if args.from_to == "from":
-    np.savetxt('sumsfrom108.txt', sums)
+    np.savetxt('Sum_by_Time_from108_' + str(10 ** -(accuracy - 9.0)) , sums)
 else:
-    np.savetxt('sumsto108.txt', sums)
+    np.savetxt('Sum_by_Time_to108_' + str(10 ** -(accuracy - 9.0)), sums)
+
+print("savetxt")
 
 # 绘制柱状图
 plt.bar(times, sums, color='skyblue')
