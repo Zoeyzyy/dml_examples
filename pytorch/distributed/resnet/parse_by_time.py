@@ -14,7 +14,7 @@ parser.add_argument('--reciever')
 args = parser.parse_args()
 
 
-pcap_name = "../../../"+ args.pcap_file +".pcap"
+pcap_name = "../../../"+ args.pcap_file +".txt"
 epochfile_name = "step.txt"
 
 accuracy = (int)(args.accuracy)
@@ -46,22 +46,34 @@ def find_max_key_less_than_x(dictionary, x):
                 max_key = key
     return max_key
 
+import re
+
+def is_valid_time(time_str):
+    pattern = r'^\d{2}:\d{2}:\d{2}\.\d+$'
+    return bool(re.match(pattern, time_str))
+
 # 遍历每一行
 for line in lines:
     # 检查是否包含[P.]，并提取时间和数字
-    if '[P.]' in line and 'length' in line:
+    if 'length' in line:
         parts = line.split()
-        time_str = parts[0]  # 时间字符串
-        time_str = time_str[:accuracy]
-        length_index = parts.index('length')  # 查找 'length' 的位置
-        x_index = length_index + 1  # 数字的位置在 'length' 之后
-        if x_index < len(parts) :
-            if not parts[x_index].isdigit():
-                parts[x_index] = parts[x_index][:-1]
-            x = float(parts[x_index])
-            if x != 0:
-                # 将数字累加到对应时间点
-                time_sums[time_str] = time_sums.get(time_str, 0) + x
+        if is_valid_time(parts[0]):
+            time_str = parts[0]  # 时间字符串
+            time_str = time_str[:accuracy]
+            x_index = len(parts) - 1
+            try:
+                while(len(parts[x_index]) > 0 and not parts[x_index].isdigit()):
+                    parts[x_index] = parts[x_index][:-1]
+                x = float(parts[x_index])
+                if x != 0:
+                    # 将数字累加到对应时间点
+                    time_sums[time_str] = time_sums.get(time_str, 0) + x
+            except ValueError:
+                print(line)
+                print("!")
+        else:
+            print(parts[0])
+            pass
 
 # 画图
 import matplotlib.pyplot as plt
@@ -73,7 +85,6 @@ i = 0
 for time_key, sum_value in time_sums.items():
     times.append(float(time_key[6:accuracy]))
     sums.append(sum_value)
-print(times[0])
 print(len(times))
 print(len(sums))
 
@@ -86,7 +97,8 @@ def adjust_list(lst):
     first_element = lst[0]
     return [x - first_element for x in lst]
 
-times = adjust_list(times)
+if len(times) > 0:
+    times = adjust_list(times)
 
 # 绘制柱状图
 plt.bar(times, sums, color='skyblue')
