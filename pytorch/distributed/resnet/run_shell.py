@@ -3,18 +3,30 @@ local_ip = 106
 all_ip = [106, 108, 112]
 
 # 打开文件以写入模式
-with open("cmd.sh", "w") as file:
+with open("sh_parse.sh", "w") as file:
     for ip in all_ip:
         # 向文件中写入内容
         if(ip != local_ip):
-            file.write("sudo tcpdump host 172.22.5." + str(ip) + " > ../../../from" + str(ip) +".pcap & \n")
-            file.write("sudo tcpdump dst 172.22.5." + str(ip) + " > ../../../to" + str(ip) +".pcap & \n")
-    
-    file.write("\n")  
-    file.write("torchrun --master_addr=172.22.5.106 --master_port=22349 --nproc_per_node=1 --nnodes=" + str(len(all_ip)) +" --node_rank="+ str(all_ip.index(local_ip)) +" main.py \n")  
-        
+            file.write("python3 parse.py  --sender=" + str(ip) + " --reciever=" + str(local_ip) + " --pcap_file from" + str(ip) +" & \n")
+            file.write("python3 parse.py  --sender=" + str(local_ip) + " --reciever=" + str(ip) + " --pcap_file to" + str(ip) +" & \n")
 
 import subprocess
 
 # 调用shell命令运行.sh文件
-subprocess.run(["sh", "cmd.sh"])
+subprocess.run(["sh", "sh_parse.sh"])
+
+accuracys = [8, 10, 11, 12] # 1s, 0.1s, 0.01s, 0.001s
+
+# 打开文件以写入模式
+with open("sh_parse_by_time.sh", "w") as file:
+    for accuracy in accuracys:
+        for ip in all_ip:
+            # 向文件中写入内容
+            if(ip != local_ip):
+                file.write("python3 parse_by_time.py --sender=" + str(ip) + " --reciever=" + str(local_ip) + " --accuracy=" + str(accuracy) +" --pcap_file from" + str(ip) +" & \n")
+                file.write("python3 parse_by_time.py --sender=" + str(local_ip) + " --reciever=" + str(ip) + " --accuracy=" + str(accuracy) +" --pcap_file to" + str(ip) +" & \n")
+
+import subprocess
+
+# 调用shell命令运行.sh文件
+subprocess.run(["sh", "sh_parse_by_time.sh"])
