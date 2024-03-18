@@ -78,7 +78,7 @@ plt.bar(times, sums, color='skyblue')
 # 添加标题和标签
 plt.title('Packet length Sum by Epoch ('+ args.reciever + 'reciever, ' + args.sender +' sender )')
 plt.xlabel('Epoch')
-plt.ylabel('Packet length Sum')
+plt.ylabel('Packet length Sum(Bytes)')
 
 # 自动调整布局
 plt.tight_layout()
