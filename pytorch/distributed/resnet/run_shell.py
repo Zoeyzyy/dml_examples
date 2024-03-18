@@ -1,6 +1,7 @@
-local_ip = 112
+local_ip = 106
 
-all_ip = [106, 108, 112]
+# all_ip = [106, 108, 112]
+all_ip = [106, 112]
 
 with open("TM.txt", "w") as file:
     pass
@@ -21,7 +22,7 @@ import subprocess
 # 调用shell命令运行.sh文件
 subprocess.run(["sh", "sh_parse.sh"])
 
-accuracys = [8, 10, 11, 12] # 1s, 0.1s, 0.01s, 0.001s
+accuracys = [8, 10, 11, 12, 13, 14] # 1s, 0.1s, 0.01s, 0.001s, 0.0001s, 0.00001s
 
 # 打开文件以写入模式
 with open("sh_parse_by_time.sh", "w") as file:
