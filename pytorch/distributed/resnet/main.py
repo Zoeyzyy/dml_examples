@@ -234,6 +234,8 @@ def main():
 
     # Loop over the dataset multiple times
     times = []
+    with open("step.txt", "w") as f:
+        f.truncate(0)
     for epoch in range(num_epochs):
         import datetime
         print(datetime.datetime.now(), "Epoch: ", epoch, file=open('./step.txt', 'a'))
