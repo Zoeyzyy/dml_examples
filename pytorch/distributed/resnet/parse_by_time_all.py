@@ -146,11 +146,11 @@ import numpy as np
 
 # 将列表写入文本文件
 if args.from_to == "from":
-    np.savetxt('Sum_by_Time_from106_' + str(10 ** -(accuracy - 9.0)) , sums)
+    np.savetxt('Sum_by_Time_from108_' + str(10 ** -(accuracy - 9.0)) , sums)
 else:
-    np.savetxt('Sum_by_Time_to106_' + str(10 ** -(accuracy - 9.0)), sums)
+    np.savetxt('Sum_by_Time_to108_' + str(10 ** -(accuracy - 9.0)), sums)
 
-np.savetxt('step2time_index_106', step2time_index)
+np.savetxt('./step2time_index/step2time_index_108_'+str(accuracy), step2time_index)
 
 print("savetxt")
 
@@ -162,14 +162,14 @@ plt.xticks(times[::gap_x])
 # 添加标题和标签
 if accuracy == 8:
     if args.from_to == "from":
-        plt.title('Packet length Sum by Time ( from 106 and ' + str(10 ** -(accuracy - 8.0)) + 's )')
+        plt.title('Packet length Sum by Time ( from 108 and ' + str(10 ** -(accuracy - 8.0)) + 's )')
     else:
-        plt.title('Packet length Sum by Time ( to 106 and ' + str(10 ** -(accuracy - 8.0)) + 's )')
+        plt.title('Packet length Sum by Time ( to 108 and ' + str(10 ** -(accuracy - 8.0)) + 's )')
 else:
     if args.from_to == "from":
-        plt.title('Packet length Sum by Time ( from 106 and ' + str(10 ** -(accuracy - 9.0)) + 's )')
+        plt.title('Packet length Sum by Time ( from 108 and ' + str(10 ** -(accuracy - 9.0)) + 's )')
     else:
-        plt.title('Packet length Sum by Time ( to 106 and ' + str(10 ** -(accuracy - 9.0)) + 's )')
+        plt.title('Packet length Sum by Time ( to 108 and ' + str(10 ** -(accuracy - 9.0)) + 's )')
 plt.xlabel('Time(s)')
 plt.ylabel('Packet length Sum(Bytes)')
 
@@ -178,6 +178,6 @@ plt.tight_layout()
 
 # 保存图像
 if accuracy == 8:
-    plt.savefig('sum_by_time_'+ str(10 ** -(accuracy - 8.0)) + 's_' + args.from_to + 'all106.png')
+    plt.savefig('sum_by_time_'+ str(10 ** -(accuracy - 8.0)) + 's_' + args.from_to + 'all108.png')
 else:
-    plt.savefig('sum_by_time_'+ str(10 ** -(accuracy - 9.0)) + 's_' + args.from_to + 'all106.png')
+    plt.savefig('sum_by_time_'+ str(10 ** -(accuracy - 9.0)) + 's_' + args.from_to + 'all108.png')
