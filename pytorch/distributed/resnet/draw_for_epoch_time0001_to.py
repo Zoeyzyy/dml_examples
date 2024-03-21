@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from106_0_0001 = np.loadtxt('Sum_by_Time_from106_0.0001').tolist()
-from108_0_0001 = np.loadtxt('Sum_by_Time_from108_0.0001').tolist()
-from112_0_0001 = np.loadtxt('Sum_by_Time_from112_0.0001').tolist()
+to106_0_0001 = np.loadtxt('Sum_by_Time_to106_0.0001').tolist()
+to108_0_0001 = np.loadtxt('Sum_by_Time_to108_0.0001').tolist()
+to112_0_0001 = np.loadtxt('Sum_by_Time_to112_0.0001').tolist()
 
 step106 = np.loadtxt('step2time_index_106').tolist()
 step108 = np.loadtxt('step2time_index_108').tolist()
@@ -31,20 +31,20 @@ def max_nonzero_index(lst1, lst2, lst3):
     return max_index
 
 position_l = min(step106[0], step108[0], step112[0])
-position_r = max_nonzero_index(from106_0_0001, from108_0_0001, from112_0_0001)
+position_r = max_nonzero_index(to106_0_0001, to108_0_0001, to112_0_0001)
 
 step106 = [x - position_l for x in step106]
 step108 = [x - position_l for x in step108]
 step112 = [x - position_l for x in step112]
 
 zeros = [0] * (int(step106[0]))
-from106_0_0001 = zeros + from106_0_0001
+to106_0_0001 = zeros + to106_0_0001
 zeros = [0] * (int(step108[0]))
-from108_0_0001 = zeros + from108_0_0001
+to108_0_0001 = zeros + to108_0_0001
 zeros = [0] * (int(step112[0]))
-from112_0_0001 = zeros + from112_0_0001
+to112_0_0001 = zeros + to112_0_0001
 
-label = ["from 106","from 108","from 112"]
+label = ["to 106","to 108","to 112"]
 
 colors = ['blue', 'orange', 'green', 'red']
 
@@ -56,13 +56,13 @@ for epoch_i in range(0, 10):
         x_l = min(step106[epoch_i], step108[epoch_i], step112[epoch_i])
         x_r = max(step106[epoch_i + 1], step108[epoch_i + 1], step112[epoch_i + 1])
     if epoch_i != 9:
-        data1 = ([0] * (int(step106[epoch_i]))) + (from106_0_0001[int(step106[epoch_i]): int(step106[epoch_i + 1])]) + ([0] * (int(x_r) - int(step106[epoch_i + 1])))
-        data2 = ([0] * (int(step108[epoch_i]))) + (from108_0_0001[int(step108[epoch_i]): int(step108[epoch_i + 1])]) + ([0] * (int(x_r) - int(step108[epoch_i + 1])))
-        data3 = ([0] * (int(step112[epoch_i]))) + (from112_0_0001[int(step112[epoch_i]): int(step112[epoch_i + 1])]) + ([0] * (int(x_r) - int(step112[epoch_i + 1])))
+        data1 = ([0] * (int(step106[epoch_i]))) + (to106_0_0001[int(step106[epoch_i]): int(step106[epoch_i + 1])]) + ([0] * (int(x_r) - int(step106[epoch_i + 1])))
+        data2 = ([0] * (int(step108[epoch_i]))) + (to108_0_0001[int(step108[epoch_i]): int(step108[epoch_i + 1])]) + ([0] * (int(x_r) - int(step108[epoch_i + 1])))
+        data3 = ([0] * (int(step112[epoch_i]))) + (to112_0_0001[int(step112[epoch_i]): int(step112[epoch_i + 1])]) + ([0] * (int(x_r) - int(step112[epoch_i + 1])))
     else:
-        data1 = ([0] * (int(step106[epoch_i]) - int(x_l))) + (from106_0_0001[int(step106[epoch_i]): int(x_r)])
-        data2 = ([0] * (int(step108[epoch_i]) - int(x_l))) + (from108_0_0001[int(step108[epoch_i]): int(x_r)])
-        data3 = ([0] * (int(step112[epoch_i]) - int(x_l))) + (from112_0_0001[int(step112[epoch_i]): int(x_r)])
+        data1 = ([0] * (int(step106[epoch_i]) - int(x_l))) + (to106_0_0001[int(step106[epoch_i]): int(x_r)])
+        data2 = ([0] * (int(step108[epoch_i]) - int(x_l))) + (to108_0_0001[int(step108[epoch_i]): int(x_r)])
+        data3 = ([0] * (int(step112[epoch_i]) - int(x_l))) + (to112_0_0001[int(step112[epoch_i]): int(x_r)])
 
     print(epoch_i, len(data1), len(data2), len(data3))
     assert len(data1) == len(data2) and len(data3) == len(data2), "data 1 2 3 不长度相等"
@@ -78,19 +78,19 @@ for epoch_i in range(0, 10):
 
     # 绘制第一个子图
     axs[0].bar(range(len(data1)), data1, color = colors[0])
-    axs[0].set_title('from 106')
+    axs[0].set_title('to 106')
     axs[0].set_xlabel('Time (0.0001s)')
     axs[0].set_ylabel('Packet Length Sum')
 
     # 绘制第二个子图
     axs[1].bar(range(len(data2)), data2, color = colors[1])
-    axs[1].set_title('from 108')
+    axs[1].set_title('to 108')
     axs[1].set_xlabel('Time (0.0001s)')
     axs[1].set_ylabel('Packet Length Sum')
 
     # 绘制第三个子图
     axs[2].bar(range(len(data3)), data3, color = colors[2])
-    axs[2].set_title('from 112')
+    axs[2].set_title('to 112')
     axs[2].set_xlabel('Time (0.0001s)')
     axs[2].set_ylabel('Packet Length Sum')
 
@@ -102,4 +102,4 @@ for epoch_i in range(0, 10):
     plt.tight_layout()
 
     # 展示图像
-    plt.savefig("from0_0001s_epoch" + str(epoch_i + 1) + ".png")
+    plt.savefig("to0_0001s_epoch" + str(epoch_i + 1) + ".png")
