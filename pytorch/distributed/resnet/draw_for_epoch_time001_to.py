@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-to106_0_001 = np.loadtxt('Sum_by_Time_to106_0.001').tolist()
-to108_0_001 = np.loadtxt('Sum_by_Time_to108_0.001').tolist()
-to112_0_001 = np.loadtxt('Sum_by_Time_to112_0.001').tolist()
+to106_0_001 = np.loadtxt('./Sum_by_time/Sum_by_Time_to106_0.001').tolist()
+to108_0_001 = np.loadtxt('./Sum_by_time/Sum_by_Time_to108_0.001').tolist()
+to112_0_001 = np.loadtxt('./Sum_by_time/Sum_by_Time_to112_0.001').tolist()
 
-step106 = np.loadtxt('step2time_index_106').tolist()
-step108 = np.loadtxt('step2time_index_108').tolist()
-step112 = np.loadtxt('step2time_index_112').tolist()
+step106 = np.loadtxt('./step2time_index/step2time_index_106_12').tolist()
+step108 = np.loadtxt('./step2time_index/step2time_index_108_12').tolist()
+step112 = np.loadtxt('./step2time_index/step2time_index_112_12').tolist()
 
 def first_nonzero_index(lst):
     for i, num in enumerate(lst):
@@ -56,13 +56,13 @@ for epoch_i in range(0, 10):
         x_l = min(step106[epoch_i], step108[epoch_i], step112[epoch_i])
         x_r = max(step106[epoch_i + 1], step108[epoch_i + 1], step112[epoch_i + 1])
     if epoch_i != 9:
-        data1 = ([0] * (int(step106[epoch_i]))) + (to106_0_001[int(step106[epoch_i]): int(step106[epoch_i + 1])]) + ([0] * (int(x_r) - int(step106[epoch_i + 1])))
-        data2 = ([0] * (int(step108[epoch_i]))) + (to108_0_001[int(step108[epoch_i]): int(step108[epoch_i + 1])]) + ([0] * (int(x_r) - int(step108[epoch_i + 1])))
-        data3 = ([0] * (int(step112[epoch_i]))) + (to112_0_001[int(step112[epoch_i]): int(step112[epoch_i + 1])]) + ([0] * (int(x_r) - int(step112[epoch_i + 1])))
+        data1 = ([0] * (int(step106[epoch_i]) - int(x_l))) + (to106_0_001[int(step106[epoch_i]): int(step106[epoch_i + 1])]) + ([0] * (int(x_r) - int(step106[epoch_i + 1])))
+        data2 = ([0] * (int(step108[epoch_i]) - int(x_l))) + (to108_0_001[int(step108[epoch_i]): int(step108[epoch_i + 1])]) + ([0] * (int(x_r) - int(step108[epoch_i + 1])))
+        data3 = ([0] * (int(step112[epoch_i]) - int(x_l))) + (to112_0_001[int(step112[epoch_i]): int(step112[epoch_i + 1])]) + ([0] * (int(x_r) - int(step112[epoch_i + 1])))
     else:
-        data1 = ([0] * (int(step106[epoch_i]) - int(x_l))) + (to106_0_001[int(step106[epoch_i]): int(x_r)])
-        data2 = ([0] * (int(step108[epoch_i]) - int(x_l))) + (to108_0_001[int(step108[epoch_i]): int(x_r)])
-        data3 = ([0] * (int(step112[epoch_i]) - int(x_l))) + (to112_0_001[int(step112[epoch_i]): int(x_r)])
+        data1 = ([0] * (int(step106[epoch_i]) - int(x_l))) + (to106_0_001[int(step106[epoch_i]): int(x_l + 800)])
+        data2 = ([0] * (int(step108[epoch_i]) - int(x_l))) + (to108_0_001[int(step108[epoch_i]): int(x_l + 800)])
+        data3 = ([0] * (int(step112[epoch_i]) - int(x_l))) + (to112_0_001[int(step112[epoch_i]): int(x_l + 800)])
 
     print(epoch_i, len(data1), len(data2), len(data3))
     assert len(data1) == len(data2) and len(data3) == len(data2), "data 1 2 3 不长度相等"
@@ -102,4 +102,4 @@ for epoch_i in range(0, 10):
     plt.tight_layout()
 
     # 展示图像
-    plt.savefig("to0_001s_epoch" + str(epoch_i + 1) + ".png")
+    plt.savefig("./epoch_time/to0_001s/to0_001s_epoch" + str(epoch_i + 1) + ".png")
