@@ -1,11 +1,11 @@
-local_ip = 112
+local_ip = 108
 num_epochs = 100
 
 all_ip = [106, 108, 112]
 
 # 打开文件以写入模式
 with open("cmd.sh", "w") as file:
-    file.write("sudo rm ../../../*.pcap \n")
+    file.write("sudo rm ./packet/*.pcap \n")
     for ip in all_ip:
         # 向文件中写入内容
         if(ip != local_ip):
