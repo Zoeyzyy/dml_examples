@@ -1,11 +1,11 @@
-local_ip = 106
+local_ip = 112
 num_epochs = 100
 
 all_ip = [106, 108, 112]
 
 # 打开文件以写入模式
 with open("cmd.sh", "w") as file:
-    file.write("sudo rm ./packet/*.pcap \n")
+    file.write("sudo rm ../../../*.pcap \n")
     for ip in all_ip:
         # 向文件中写入内容
         if(ip != local_ip):
@@ -13,7 +13,7 @@ with open("cmd.sh", "w") as file:
             file.write("sudo nohup tcpdump dst 172.22.5." + str(ip) + " -s 128  -w ./packet/to" + str(ip) +".pcap & \n")
     
     file.write("\n")  
-    file.write("nohup torchrun --master_addr=172.22.5.106 --master_port=22349 --nproc_per_node=1 --nnodes=" + str(len(all_ip)) +" --node_rank="+ str(all_ip.index(local_ip)) +" main.py --backend=nccl --use_syn --batch_size=128 --num_epochs=" + str(num_epochs) + " --arch=resnet101 &\n")  
+    file.write("nohup torchrun --master_addr=172.22.5.106 --master_port=22349 --nproc_per_node=1 --nnodes=" + str(len(all_ip)) +" --node_rank="+ str(all_ip.index(local_ip)) +" main.py --backend=nccl --use_syn --batch_size=32 --num_epochs=" + str(num_epochs) + " --arch=resnet152 &\n")  
         
 
 import subprocess
