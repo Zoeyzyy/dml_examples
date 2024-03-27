@@ -1,4 +1,4 @@
-local_ip = 108
+local_ip = 106
 num_epochs = 100
 
 all_ip = [106, 108, 112]
