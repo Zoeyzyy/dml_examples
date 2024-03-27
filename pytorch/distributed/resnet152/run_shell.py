@@ -1,7 +1,7 @@
 local_ip = 106
 
-# all_ip = [106, 108, 112]
-all_ip = [106, 112]
+all_ip = [106, 108, 112]
+# all_ip = [106, 112]
 
 with open("TM.txt", "w") as file:
     pass
