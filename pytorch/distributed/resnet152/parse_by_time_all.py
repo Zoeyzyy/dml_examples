@@ -49,7 +49,7 @@ def is_valid_time(time_str):
     return bool(re.match(pattern, time_str))
 
 # 定义要搜索的文件夹路径
-folder_path = "../../../"
+folder_path = "./packet"
 
 # 定义要匹配的文件名模式
 if args.from_to == "from":
