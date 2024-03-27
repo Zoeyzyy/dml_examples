@@ -40,8 +40,6 @@ for i in range(len(real_epoch_time_plot)):
         real_epoch_time_plot[0] + epoch_time_gap * i)
 
 from106 = np.loadtxt('./Sum_by_time/Sum_by_Time_from106_'+ str(time_gap)).tolist()
-from108 = np.loadtxt('./Sum_by_time/Sum_by_Time_from108_'+ str(time_gap)).tolist()
-from112 = np.loadtxt('./Sum_by_time/Sum_by_Time_from112_'+ str(time_gap)).tolist()
 
 def draw_sliding_window(window_i):
     print("draw sliding window ", window_i)
@@ -77,63 +75,9 @@ def draw_sliding_window(window_i):
                 str(accuracy) + "_window" + str(window_i + 1) + ".png")
     plt.close()
 
-    data = from108[x_l:x_r]
-    # x 坐标的间隔
-    time_interval = 10 ** (int)(- accuracy + 9.0)
-    # x 坐标范围
-    x_values = [i * time_interval for i in range(len(data))]
-
-    # 设置子图布局
-    fig, axs = plt.subplots(1, 1, figsize=(8, 10))
-
-    # 绘制第一个子图
-    axs.bar(x_values, data, color="blue")
-    axs.set_title(str(from_to)+' 108')
-    axs.set_xlabel('Time (s)')
-    axs.set_ylabel('Packet Length Sum (Bytes)')
-
-    # 设置整个图的标题
-    fig.suptitle('Packet Length Sum by Time (time gap ' + str(time_interval) +
-                 's & window ' + str(window_i + 1) + ' )', fontsize=16)
-
-    # 调整布局
-    plt.tight_layout()
-
-    # 展示图像
-    plt.savefig("./window_time/"+ str(from_to)+"_" + str(accuracy) + "/"+str(from_to)+"_108_" +
-                str(accuracy) + "_window" + str(window_i + 1) + ".png")
-    plt.close()
-    
-    data = from112[x_l:x_r]
-    # x 坐标的间隔
-    time_interval = 10 ** (int)(- accuracy + 9.0)
-    # x 坐标范围
-    x_values = [i * time_interval for i in range(len(data))]
-
-    # 设置子图布局
-    fig, axs = plt.subplots(1, 1, figsize=(8, 10))
-
-    # 绘制第一个子图
-    axs.bar(x_values, data, color="blue")
-    axs.set_title(str(from_to) + ' 112')
-    axs.set_xlabel('Time (s)')
-    axs.set_ylabel('Packet Length Sum (Bytes)')
-
-    # 设置整个图的标题
-    fig.suptitle('Packet Length Sum by Time (time gap ' + str(time_interval) +
-                 's & window ' + str(window_i + 1) + ' )', fontsize=16)
-
-    # 调整布局
-    plt.tight_layout()
-
-    # 展示图像
-    plt.savefig("./window_time/"+ str(from_to)+"_" + str(accuracy) + "/"+str(from_to)+"_112_" +
-                str(accuracy) + "_window" + str(window_i + 1) + ".png")
-    plt.close()
-
 
 if __name__ == "__main__":
-    pool = multiprocessing.Pool(processes=100)
+    pool = multiprocessing.Pool(processes=40)
     for window_i in range(0, 100):
         pool.apply_async(draw_sliding_window, (window_i, ))
     pool.close()
