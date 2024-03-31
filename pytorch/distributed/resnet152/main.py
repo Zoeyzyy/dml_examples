@@ -232,13 +232,14 @@ def main():
         ddp_model.parameters(), lr=learning_rate, momentum=0.9, weight_decay=1e-5
     )
 
+    import datetime
     # Loop over the dataset multiple times
     times = []
+    step_line = []
     with open("step.txt", "w") as f:
         f.truncate(0)
     for epoch in range(num_epochs):
-        import datetime
-        print(datetime.datetime.now(), "Epoch: ", epoch, file=open('./step.txt', 'a'))
+        step_line.append(str(datetime.datetime.now()) + " Epoch: " + str(epoch))
         # Save and evaluate model routinely
         if not use_syn:
             if epoch % 10 == 0:
@@ -289,6 +290,9 @@ def main():
                         WORLD_SIZE * batch_size * count / elapsed
                     )
                 )
+    with open('step.txt', 'w') as file:
+        for line in step_line:
+            file.write(line + '\n')
 
 
 if __name__ == "__main__":
