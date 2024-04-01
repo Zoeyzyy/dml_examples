@@ -1,0 +1,10 @@
+by_epoch/
+by_time/
+communication_start_distribute/
+packet/
+step2time_index/
+Sum_by_time/
+window_time/
+
+*.png
+*.txt
