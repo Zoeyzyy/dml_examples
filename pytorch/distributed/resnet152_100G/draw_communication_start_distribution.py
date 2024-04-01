@@ -25,8 +25,8 @@ from_files = os.path.join('./packet', 'from*.txt')
 to_files = os.path.join('./packet', 'to*.txt')
 
 # 尝试从文件中加载communication_start_time
-if os.path.exists('./communication_start_distribute/communication_start_time_108.pkl'):
-    with open('./communication_start_distribute/communication_start_time_108.pkl', 'rb') as f:
+if os.path.exists('./communication_start_distribute/communication_start_time_3.pkl'):
+    with open('./communication_start_distribute/communication_start_time_3.pkl', 'rb') as f:
         communication_start_time = pickle.load(f)
 else:
     # 遍历from*.txt文件
@@ -60,17 +60,21 @@ else:
                         break
     
     # 将communication_start_time保存到文件中
-    with open('./communication_start_distribute/communication_start_time_108.pkl', 'wb') as f:
+    with open('./communication_start_distribute/communication_start_time_3.pkl', 'wb') as f:
         pickle.dump(communication_start_time, f)
 
+# 去除异常值
+sorted(communication_start_time)
+communication_start_time = communication_start_time[:-1]
 
 # 绘制直方图
+plt.figure(figsize=(10, 10))
 plt.hist(communication_start_time, bins=30, color='skyblue', edgecolor='black')
 
 # 添加标签和标题
 plt.xlabel('Start Time of Communication(s)')
 plt.ylabel('Frequency')
-plt.title('Distribution of start time of communication (Machine 108)')
+plt.title('Distribution of start time of communication (Machine 3)')
 
 # 显示图形
-plt.savefig('./communication_start_distribute/108_distribution.png')
+plt.savefig('./communication_start_distribute/3_distribution.png')
