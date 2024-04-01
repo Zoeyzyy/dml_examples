@@ -35,7 +35,7 @@ def find_files_with_pattern(folder_path, pattern):
 
 def time_to_float(time_str):
     hours, minutes, seconds = map(float, time_str.split(':'))
-    return hours * 40 * 40 + minutes * 40 + seconds
+    return hours * 60 * 60 + minutes * 60 + seconds
 
 def find_max_key_less_than_x(dictionary, x):
     max_key = None
