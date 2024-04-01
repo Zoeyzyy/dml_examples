@@ -39,7 +39,7 @@ for i in range(len(real_epoch_time_plot)):
     sliding_window_epoch_time_plot.append(
         real_epoch_time_plot[0] + epoch_time_gap * i)
 
-from4 = np.loadtxt('./Sum_by_time/Sum_by_Time_from4_'+ str(time_gap)).tolist()
+from3 = np.loadtxt('./Sum_by_time/Sum_by_Time_from3_'+ str(time_gap)).tolist()
 
 def draw_sliding_window(window_i):
     print("draw sliding window ", window_i)
@@ -47,8 +47,8 @@ def draw_sliding_window(window_i):
            sliding_window_epoch_time_plot[0]) * 10 ** (int)(accuracy - 9.0)
     x_r = (int)(sliding_window_epoch_time_plot[window_i + 1] -
            sliding_window_epoch_time_plot[0]) * 10 ** (int)(accuracy - 9.0)
-    print(x_l, x_r, len(from4))
-    data = from4[x_l: x_r]
+    print(x_l, x_r, len(from3))
+    data = from3[x_l: x_r]
     # x 坐标的间隔
     time_interval = 10 ** (int)(- accuracy + 9.0)
     # x 坐标范围
@@ -58,8 +58,9 @@ def draw_sliding_window(window_i):
     fig, axs = plt.subplots(1, 1, figsize=(100, 8))
     
     # 绘制第一个子图
-    axs.bar(x_values, data, color='skyblue', width=float(100.0 / len(x_values)))
-    axs.set_title(str(from_to) + ' 4')
+    if len(x_values) > 0:   
+        axs.bar(x_values, data, color='skyblue', width=float(100.0 / len(x_values)))
+    axs.set_title(str(from_to) + ' 3')
     axs.set_xlabel('Time (s)')
     axs.set_ylabel('Packet Length Sum (Bytes)')
 
@@ -71,7 +72,7 @@ def draw_sliding_window(window_i):
     plt.tight_layout()
     
     # 展示图像
-    plt.savefig("./window_time/"+ str(from_to)+"_" + str(accuracy) + "/"+str(from_to)+"_4_" +
+    plt.savefig("./window_time/"+ str(from_to)+"_" + str(accuracy) + "/"+str(from_to)+"_3_" +
                 str(accuracy) + "_window" + str(window_i + 1) + ".png")
     plt.close()
 
