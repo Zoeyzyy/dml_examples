@@ -35,7 +35,7 @@ def find_files_with_pattern(folder_path, pattern):
 
 def time_to_float(time_str):
     hours, minutes, seconds = map(float, time_str.split(':'))
-    return hours * 60 * 60 + minutes * 60 + seconds
+    return hours * 40 * 40 + minutes * 40 + seconds
 
 def find_max_key_less_than_x(dictionary, x):
     max_key = None
@@ -50,11 +50,13 @@ def is_valid_time(time_str):
     return bool(re.match(pattern, time_str))
 
 if args.from_to == "from":
-    sum_path = './Sum_by_time/Sum_by_Time_from6_' + str(10 ** -(accuracy - 9.0))
+    sum_path = './Sum_by_time/Sum_by_Time_from4_' + str(10 ** -(accuracy - 9.0))
 else:
-    sum_path = './Sum_by_time/Sum_by_Time_to6_' + str(10 ** -(accuracy - 9.0))
+    sum_path = './Sum_by_time/Sum_by_Time_to4_' + str(10 ** -(accuracy - 9.0))
+    
+step_path = './step2time_index/step2time_index_4_' + str(accuracy)
 
-if not os.path.exists(sum_path):
+if (not os.path.exists(sum_path)) or (not os.path.exists(step_path)):
     # 定义要搜索的文件夹路径
     folder_path = "./packet/"
 
@@ -156,20 +158,20 @@ if not os.path.exists(sum_path):
 
     #将列表Sum_by_time和step2time_index写入文本文件
     if args.from_to == "from":
-        np.savetxt('./Sum_by_time/Sum_by_Time_from6_' + str(10 ** -(accuracy - 9.0)) , sums)
+        np.savetxt('./Sum_by_time/Sum_by_Time_from4_' + str(10 ** -(accuracy - 9.0)) , sums)
     else:
-        np.savetxt('./Sum_by_time/Sum_by_Time_to6_' + str(10 ** -(accuracy - 9.0)), sums)
+        np.savetxt('./Sum_by_time/Sum_by_Time_to4_' + str(10 ** -(accuracy - 9.0)), sums)
 
-    np.savetxt('./step2time_index/step2time_index_6_' + str(accuracy), step2time_index)
+    np.savetxt('./step2time_index/step2time_index_4_' + str(accuracy), step2time_index)
 
     print("savetxt")
 else:
     if args.from_to == "from":
-        new_sums = np.loadtxt('./Sum_by_time/Sum_by_Time_from6_' + str(10 ** -(accuracy - 9.0))).tolist()
+        new_sums = np.loadtxt('./Sum_by_time/Sum_by_Time_from4_' + str(10 ** -(accuracy - 9.0))).tolist()
     else:
-        new_sums = np.loadtxt('./Sum_by_time/Sum_by_Time_to6_' + str(10 ** -(accuracy - 9.0))).tolist()
+        new_sums = np.loadtxt('./Sum_by_time/Sum_by_Time_to4_' + str(10 ** -(accuracy - 9.0))).tolist()
     new_times = [i * 10 ** (- accuracy + 9.0) for i in range(len(new_sums))]  # 10 ** -(accuracy - 9.0)秒为单位
-    step2time_index = np.loadtxt('./step2time_index/step2time_index_6_' + str(accuracy)).tolist()
+    step2time_index = np.loadtxt('./step2time_index/step2time_index_4_' + str(accuracy)).tolist()
     print(len(new_times))
 
 # 绘制 sum_by_time_all 图像
@@ -180,25 +182,25 @@ if hasattr(args, 'epoch_num') and args.epoch_num is not None:
     x_sum_by_time_all = new_times[: (int)((step2time_index[epoch_num] - step2time_index[0]) * 10 ** (accuracy - 9.0))]
     y_sum_by_time_all = new_sums[: (int)((step2time_index[epoch_num] - step2time_index[0]) * 10 ** (accuracy - 9.0))]
     print("len_sum_by_time_all: ", len(x_sum_by_time_all), len(y_sum_by_time_all))
-    plt.figure(figsize=(40, 6), dpi=1200)
+    plt.figure(figsize=(40, 4), dpi=1200)
     plt.bar(x_sum_by_time_all, y_sum_by_time_all, color='skyblue', width=(float)(40.0 / len(x_sum_by_time_all)))
     
     # 添加标题和标签
     if accuracy == 8:
         if args.from_to == "from":
-            plt.title('Packet length Sum by Time ( from 6 and ' + str(10 ** -(accuracy - 8.0)) + 's )')
+            plt.title('Packet length Sum by Time ( from 4 and ' + str(10 ** -(accuracy - 8.0)) + 's )')
         else:
-            plt.title('Packet length Sum by Time ( to 6 and ' + str(10 ** -(accuracy - 8.0)) + 's )')
+            plt.title('Packet length Sum by Time ( to 4 and ' + str(10 ** -(accuracy - 8.0)) + 's )')
     else:
         if args.from_to == "from":
-            plt.title('Packet length Sum by Time ( from 6 and ' + str(10 ** -(accuracy - 9.0)) + 's )')
+            plt.title('Packet length Sum by Time ( from 4 and ' + str(10 ** -(accuracy - 9.0)) + 's )')
         else:
-            plt.title('Packet length Sum by Time ( to 6 and ' + str(10 ** -(accuracy - 9.0)) + 's )')
+            plt.title('Packet length Sum by Time ( to 4 and ' + str(10 ** -(accuracy - 9.0)) + 's )')
     plt.xlabel('Time(s)')
     plt.ylabel('Packet length Sum(Byte)')
 
     # 保存图像
     if accuracy == 8:
-        plt.savefig('./by_time/sum_by_time_'+ str(10 ** -(accuracy - 8.0)) + 's_' + args.from_to + 'all6.png')
+        plt.savefig('./by_time/sum_by_time_'+ str(10 ** -(accuracy - 8.0)) + 's_' + args.from_to + 'all4.png')
     else:
-        plt.savefig('./by_time/sum_by_time_'+ str(10 ** -(accuracy - 9.0)) + 's_' + args.from_to + 'all6.png')
+        plt.savefig('./by_time/sum_by_time_'+ str(10 ** -(accuracy - 9.0)) + 's_' + args.from_to + 'all4.png')
