@@ -93,7 +93,7 @@ if (not os.path.exists(sum_path)) or (not os.path.exists(step_path)):
 
         # 遍历每一行
         for line in lines:
-            # 检查是否包含[P.]，并提取时间和数字
+            # 提取时间和数字
             if 'length' in line:
                 parts = line.split()
                 if is_valid_time(parts[0]):
