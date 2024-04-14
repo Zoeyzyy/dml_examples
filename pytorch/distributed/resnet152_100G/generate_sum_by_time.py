@@ -13,22 +13,25 @@ def generate_sum_by_time(time_step, node):
     filenames = get_files_by_suffix("./packet", ".txt")
     
     master_step_line_number = count_lines("./master/step.txt")
-    start_time = read_th_line("./master/step.txt", 0).split[1]
-    end_time = read_th_line("./master/step.txt", master_step_line_number - 1).split[1]
+    start_time = read_th_line("./master/step.txt", 0)
+    start_time = start_time.split()[1]
+    end_time = read_th_line("./master/step.txt", master_step_line_number - 1)
+    end_time = end_time.split()[1]
+    print(start_time, end_time)
     
     float_time_step = time_step.replace('_', '.')
-    len_sum_by_time = (time_to_float(end_time) - time_to_float(start_time)) / time_to_float(float_time_step) + 1
-    sum_by_time = [0] * len_sum_by_time
+    len_sum_by_time = (int)((time_to_float(end_time) - time_to_float(start_time)) / (float)(float_time_step)) + 1
     
     for filename in filenames:
+        sum_by_time = [0] * len_sum_by_time
         # 打开文件
-        with open(filename, 'r') as file:
+        with open("./packet/" + filename, 'r') as file:
             lines = file.readlines()
             for line in lines:
                 if "seq" in line:
                     line = line.split()
                     current_time = time_to_float(line[0])
-                    time_index = (int)((current_time - time_to_float(start_time)) / time_to_float(float_time_step))
+                    time_index = (int)((current_time - time_to_float(start_time)) / (float)(float_time_step))
                     # 寻找"length" 的index
                     length_index = line.index("length")
                     if time_index >= 0 and time_index < len_sum_by_time:
@@ -36,7 +39,7 @@ def generate_sum_by_time(time_step, node):
 
             
             # 存储到文件中
-            from_to = filename.split("_")[3]
+            from_to = filename.split(".")[0]
             storename = "./Sum_by_Time/Sum_by_time_node" + str(node) + "_" + from_to + "_" + time_step
             create_file(storename)
             # sum_by_time记录到storefile中，每一行一个数据
