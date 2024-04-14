@@ -31,7 +31,8 @@ def draw_TM_picture(TM_data, index, time_step):
     # 添加坐标轴含义
     plt.xlabel('sender')
     plt.ylabel('reciever')
-    plt.savefig("./TM/TM_index" + str(index) + "_" + str(time_step) + ".png")
+    create_file("./TM/"+ str(time_step) +"/TM_index" + str(index) + "_" + str(time_step) + ".png")
+    plt.savefig("./TM/"+ str(time_step) +"/TM_index" + str(index) + "_" + str(time_step) + ".png")
     plt.close()
     
 # 计算TM的index，画TM_count个矩阵
