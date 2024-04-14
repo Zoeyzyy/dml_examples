@@ -50,9 +50,9 @@ def is_valid_time(time_str):
 
 def remove_last_char_if_not_digit(string):
     if string.isdigit():
-        return string
+        return int(string)
     else:
-        return string[:-1]
+        return int(string[:-1])
 
 def create_file(file_path):
     # 获取文件所在的文件夹路径
