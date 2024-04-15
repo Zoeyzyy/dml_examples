@@ -15,10 +15,14 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+import matplotlib as mpl
 
 def draw_TM_picture(TM_data, index, time_step, norm):
     # 画矩阵
     matrix = np.array(TM_data).reshape(3, 3)
+    
+    # 设置全局字体大小
+    mpl.rcParams['font.size'] = 12
     
     plt.figure()
     # 绘制矩阵图
@@ -77,8 +81,8 @@ def draw_TMs(time_step, TM_count):
 
 # 主函数
 if __name__ == '__main__':
-    time_steps = ["0_01", "0_001", "0_0001"]
-    TM_count = [100, 100, 1000]
+    time_steps = ["1_0", "0_1", "0_01", "0_001", "0_0001"]
+    TM_count = [100, 100, 100, 100, 1000]
     for time_step, TM_count in zip(time_steps, TM_count):
         draw_TMs(time_step, TM_count)
         
