@@ -51,7 +51,7 @@ def generate_sum_by_time(time_step, node):
 
 # 主函数
 if __name__ == '__main__':
-    time_steps = ["1_0", "0_1"]#["1_0", "0_1","0_01", "0_001", "0_0001"]
+    time_steps = ["1_0", "0_1","0_01", "0_001", "0_0001"]
     node = 3
     # 使用 ThreadPoolExecutor 创建一个线程池
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
