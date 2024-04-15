@@ -22,7 +22,7 @@ def draw_TM_picture(TM_data, index, time_step, norm):
     matrix = np.array(TM_data).reshape(3, 3)
     
     # 设置全局字体大小
-    mpl.rcParams['font.size'] = 12
+    mpl.rcParams['font.size'] = 16
     
     plt.figure()
     # 绘制矩阵图
